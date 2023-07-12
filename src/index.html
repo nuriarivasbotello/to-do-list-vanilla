@@ -13,9 +13,18 @@
       content="width=device-width, initial-scale=1.0"
     />
     <!-- CAMBIA EL TITLE!!! -->
-    <title>Nuevo títuloo</title>
+    <title>To do list - Vanilla</title>
   </head>
   <body>
+    <form id="form" class="form">
+      <input  id="input" name="task" type="text" placeholder="What else?" />
+    </form>
+    <div id="buttons" class="container-buttons">
+      <button class="button" data-button="0">All</button>
+      <button  class="button" data-button="1">Uncompleted</button>
+      <button  class="button" data-button="2">Completed</button>
+    </div>
+    <div id="tasks" class="tasks"></div>
     <script
       type="module"
       src="./js/index.js"

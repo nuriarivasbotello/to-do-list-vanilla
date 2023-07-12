@@ -1,5 +1,11 @@
 html {
 }
 body {
-  background-image: url('/assets/images/cat.jpeg');
+  max-width: 1440px;
+  margin:auto;
+  margin-top:30px;
+  background-color: gray;
+  display: flex;
+  flex-direction: column;
+  gap:20px
 }
