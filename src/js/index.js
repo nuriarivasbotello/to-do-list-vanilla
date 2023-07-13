@@ -2,7 +2,7 @@
 import '../scss/styles.scss';
 const formElement = document.getElementById('form');
 const tasksElement = document.getElementById('tasks');
-const filterElement = document.getElementById('filter');
+const filtersElement = document.getElementById('filter');
 const filters = {
   all: 0,
   uncomplete: 1,
@@ -72,14 +72,20 @@ const appearTasks = tasks => {
   });
   tasksElement.append(fragment);
 };
-const filtersTasks = (filter = {});
+const filterTasks = filter => {
+  for (const filter of allTasks) {
+    if (checkbox === true) {
+      console.log(filters);
+    }
+  }
+};
 formElement.addEventListener('submit', event => {
   event.preventDefault();
   if (event.target.task.value === '') return; //Para que no envies solo un tarea vacia
   listTasks(event.target.task.value);
   formElement.reset();
 });
-filterElement.addEventListener('click', event => {
-  if (event.target.tagname !== 'BUTTON') return;
-  filtersTasks;
+filtersElement.addEventListener('click', event => {
+  if (event.target.tagName !== 'BUTTON') return;
+  filterTasks(event.target.dataset.filter);
 });
