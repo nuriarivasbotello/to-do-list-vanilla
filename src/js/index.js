@@ -6,17 +6,20 @@ const buttonsElement = document.getElementById('buttons');
 
 let allTasks = [];
 
+const deleteTask = () => {};
+
 const listTasks = task => {
   const newTask = {
     id: Date.now(),
     task,
+
     completed: false
   };
   allTasks.push(newTask);
+  appearTasks(allTasks);
 };
-listTasks();
-console.log(allTasks);
-const deleteTask = () => {};
+
+const updateTask = id => {};
 const taskElement = task => {
   const newDiv = document.createElement('div');
   newDiv.classList.add('task');
@@ -26,7 +29,7 @@ const taskElement = task => {
   newDiv.append(newInput);
 
   const newText = document.createElement('p');
-  newText.textContent = task;
+  newText.textContent = task.task;
   newDiv.append(newText);
 
   const newButton = document.createElement('button');
@@ -34,15 +37,19 @@ const taskElement = task => {
   newDiv.append(newButton);
   newButton.addEventListener('click', deleteTask);
   tasksElement.append(newDiv);
+  return newDiv;
 };
 const appearTasks = tasks => {
+  const fragment = document.createDocumentFragment();
   tasks.forEach(task => {
     const newTask = taskElement(task);
     fragment.append(newTask);
   });
   tasksElement.append(fragment);
 };
+
 formElement.addEventListener('submit', event => {
   event.preventDefault();
-  taskElement(event.target.task.value);
+  listTasks(event.target.task.value);
+  formElement.reset();
 });
