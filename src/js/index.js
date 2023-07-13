@@ -2,21 +2,27 @@
 import '../scss/styles.scss';
 const formElement = document.getElementById('form');
 const tasksElement = document.getElementById('tasks');
-const buttonsElement = document.getElementById('buttons');
-
+const filterElement = document.getElementById('filter');
+const filters = {
+  all: 0,
+  uncomplete: 1,
+  complete: 2
+};
 let allTasks = [];
 
+const saveTask = task => {
+  allTasks.push(task);
+};
 const listTasks = task => {
   const newTask = {
     id: Date.now(),
     task,
-
+    task: task,
     completed: false
   };
-  allTasks.push(newTask);
+  saveTask(newTask);
   appearTasks(allTasks);
 };
-
 const deleteTask = id => {
   //Array original
   // Si clico la X, me dará un id que coincidirá con el id de la tarea. Si estas ids no coinciden se meterán en un array nuevo que se volverá a pintar más tarde eliminado esta tarea.
@@ -43,6 +49,7 @@ const taskElement = task => {
 
   const newInput = document.createElement('input');
   newInput.type = 'checkbox';
+  newInput.checked = task.completed;
   newDiv.append(newInput);
 
   const newText = document.createElement('p');
@@ -65,9 +72,14 @@ const appearTasks = tasks => {
   });
   tasksElement.append(fragment);
 };
-
+const filtersTasks = (filter = {});
 formElement.addEventListener('submit', event => {
   event.preventDefault();
+  if (event.target.task.value === '') return; //Para que no envies solo un tarea vacia
   listTasks(event.target.task.value);
   formElement.reset();
+});
+filterElement.addEventListener('click', event => {
+  if (event.target.tagname !== 'BUTTON') return;
+  filtersTasks;
 });
