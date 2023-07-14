@@ -12,6 +12,7 @@ let allTasks = [];
 
 const saveTask = task => {
   allTasks.push(task);
+  appearTasks(allTasks);
 };
 const listTasks = task => {
   const newTask = {
@@ -21,12 +22,11 @@ const listTasks = task => {
     completed: false
   };
   saveTask(newTask);
-  appearTasks(allTasks);
 };
+//Array original
+// Si clico la X, me dará un id que coincidirá con el id de la tarea. Si estas ids no coinciden se meterán en un array nuevo que se volverá a pintar más tarde eliminado esta tarea.
+//Por eso luego digo que allTasks es igual al nuevo array (newTasks).
 const deleteTask = id => {
-  //Array original
-  // Si clico la X, me dará un id que coincidirá con el id de la tarea. Si estas ids no coinciden se meterán en un array nuevo que se volverá a pintar más tarde eliminado esta tarea.
-  //Por eso luego digo que allTasks es igual al nuevo array (newTasks).
   const newTasks = [];
   for (const task of allTasks) {
     if (task.id !== id) {
@@ -34,14 +34,15 @@ const deleteTask = id => {
     }
   }
   allTasks = newTasks;
-
-  //allTasks = allTasks.filter(task => task.id !== id); Este proceso es más rápido que lo de arriba, usando filter me busca la condición que le pongo a continuación (Lo mismo explicado arriba).
-
   appearTasks(allTasks);
   console.log(id);
   console.log(allTasks);
-  // Array pero sin una tarea
+  return deleteTask;
 };
+
+//allTasks = allTasks.filter(task => task.id !== id); Este proceso es más rápido que lo de arriba, usando filter me busca la condición que le pongo a continuación (Lo mismo explicado arriba).
+
+// Array pero sin una tarea
 const taskElement = task => {
   tasksElement.textContent = '';
   const newDiv = document.createElement('div');
@@ -65,6 +66,7 @@ const taskElement = task => {
   return newDiv;
 };
 const appearTasks = tasks => {
+  taskElement.textContent = '';
   const fragment = document.createDocumentFragment();
   tasks.forEach(task => {
     const newTask = taskElement(task);
@@ -73,12 +75,30 @@ const appearTasks = tasks => {
   tasksElement.append(fragment);
 };
 const filterTasks = filter => {
-  for (const filter of allTasks) {
-    if (checkbox === true) {
-      console.log(filters);
+  const completedTask = [];
+  const uncompletedTask = [];
+  for (const task of allTasks) {
+    if (task.completed === true) {
+      completedTask.push(task);
+    } else {
+      uncompletedTask.push(task);
     }
   }
+  //Para separar las compl de las uncom
+  if (filter === 'all') {
+    appearTasks(allTasks);
+    console.log('Todas las tareas');
+  } else if (filter === 'uncompleted') {
+    appearTasks(uncompletedTask);
+    console.log('Solo las incompletas');
+  } else if (filter === 'completed') {
+    appearTasks(completedTask);
+    console.log(completedTask);
+    console.log('Solo las completas');
+  }
 };
+
+//Cada vez que hago click, el completed cambia a true o false
 formElement.addEventListener('submit', event => {
   event.preventDefault();
   if (event.target.task.value === '') return; //Para que no envies solo un tarea vacia
