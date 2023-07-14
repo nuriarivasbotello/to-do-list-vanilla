@@ -39,7 +39,14 @@ const deleteTask = id => {
   console.log(allTasks);
   return deleteTask;
 };
-
+const completeTask = id => {
+  allTasks = allTasks.map(task => {
+    if (task.id === id) {
+      task.completed = !task.completed;
+    }
+    return task;
+  });
+};
 //allTasks = allTasks.filter(task => task.id !== id); Este proceso es más rápido que lo de arriba, usando filter me busca la condición que le pongo a continuación (Lo mismo explicado arriba).
 
 // Array pero sin una tarea
@@ -62,6 +69,7 @@ const taskElement = task => {
   newDiv.append(newButton);
 
   newButton.addEventListener('click', () => deleteTask(task.id));
+  newInput.addEventListener('change', () => completeTask(task.id));
   tasksElement.append(newDiv);
   return newDiv;
 };
@@ -74,6 +82,7 @@ const appearTasks = tasks => {
   });
   tasksElement.append(fragment);
 };
+
 const filterTasks = filter => {
   const completedTask = [];
   const uncompletedTask = [];
